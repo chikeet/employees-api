@@ -1,0 +1,59 @@
+# Services
+#
+services:
+	# Domain =================
+	- App\Domain\Api\Facade\UsersFacade
+
+	## Serialize =============
+	symfony.serializer.serializer:
+		factory: Symfony\Component\Serializer\Serializer
+		arguments:
+			normalizers:
+				- Symfony\Component\Serializer\Normalizer\DateTimeNormalizer()
+				- Symfony\Component\Serializer\Normalizer\ArrayDenormalizer()
+				- @symfony.serializer.objectNormalizer
+			encoders:
+				- Symfony\Component\Serializer\Encoder\JsonEncoder()
+
+	symfony.serializer.objectNormalizer:
+		factory: Symfony\Component\Serializer\Normalizer\ObjectNormalizer(
+			classMetadataFactory: @symfony.serializer.classMetadataFactory,
+			nameConverter: Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter(),
+			propertyAccessor: null,
+			propertyTypeExtractor: Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor()
+		)
+		autowired: false
+
+	symfony.serializer.classMetadataFactory:
+		factory: Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory(@symfony.serializer.annotationLoader)
+		autowired: false
+
+	symfony.serializer.annotationLoader:
+		factory: Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader(
+			Doctrine\Common\Annotations\CachedReader(
+				@symfony.serializer.annotationReader,
+				Doctrine\Common\Cache\FilesystemCache(%tempDir%/cache/Symfony.Serializer)
+			)
+		)
+		autowired: false
+
+	symfony.serializer.annotationReader:
+		factory: Doctrine\Common\Annotations\AnnotationReader
+		autowired: false
+		setup:
+			- addGlobalIgnoredName(phpcsSuppress)
+
+	## Validator =============
+	symfony.validator:
+		type: Symfony\Component\Validator\Validator\ValidatorInterface
+		factory: @symfony.validator.builder::getValidator()
+
+	symfony.validator.builder:
+		type: Symfony\Component\Validator\ValidatorBuilder
+		factory: Symfony\Component\Validator\Validation::createValidatorBuilder()::enableAttributeMapping(
+			Doctrine\Common\Annotations\CachedReader(
+				@symfony.serializer.annotationReader,
+				Doctrine\Common\Cache\FilesystemCache(%tempDir%/cache/Symfony.Validator)
+			)
+		)
+		autowired: false

@@ -1,0 +1,59 @@
+# Extension > Nettrine
+#
+extensions:
+	# Common
+	nettrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
+
+	# Dbal
+	nettrine.dbal: Nettrine\DBAL\DI\DbalExtension
+	nettrine.dbal.console: Nettrine\DBAL\DI\DbalConsoleExtension(%consoleMode%)
+
+	# Orm
+	nettrine.orm: Nettrine\ORM\DI\OrmExtension
+	nettrine.orm.cache: Nettrine\ORM\DI\OrmCacheExtension
+	nettrine.orm.console: Nettrine\ORM\DI\OrmConsoleExtension(%consoleMode%)
+	nettrine.orm.annotations: Nettrine\ORM\DI\OrmAnnotationsExtension
+
+	nettrine.migrations: Nettrine\Migrations\DI\MigrationsExtension
+	nettrine.fixtures: Nettrine\Fixtures\DI\FixturesExtension
+	nettrine.cache: Nettrine\Cache\DI\CacheExtension
+
+nettrine.dbal:
+	debug:
+		panel: %debugMode%
+	configuration:
+		sqlLogger: Nettrine\DBAL\Logger\PsrLogger(@Monolog\Logger)
+	connection:
+		driver: %database.driver%
+		host: %database.host%
+		user: %database.user%
+		password: %database.password%
+		dbname: %database.dbname%
+		port: %database.port%
+		serverVersion: %database.serverVersion%
+
+nettrine.orm:
+	entityManagerDecoratorClass: App\Model\Database\EntityManagerDecorator
+	configuration:
+		autoGenerateProxyClasses: %debugMode%
+
+nettrine.orm.annotations:
+	mapping:
+		App\Domain: %appDir%/Domain
+
+nettrine.orm.cache:
+
+nettrine.migrations:
+	table: doctrine_migrations
+	column: version
+	directory: %rootDir%/db/Migrations
+	namespace: Database\Migrations
+	versionsOrganization: null
+
+nettrine.fixtures:
+	paths:
+		- %rootDir%/db/Fixtures
+
+decorator:
+	Doctrine\Common\EventSubscriber:
+		tags: [nettrine.subscriber]

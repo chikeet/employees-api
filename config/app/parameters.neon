@@ -1,0 +1,17 @@
+# Parameters
+#
+parameters:
+
+	# System
+	system:
+		error:
+			email: dev@dev.dev
+			presenter: Front:Error
+
+	static:
+		text: "This is example of static text"
+
+	database:
+		driver: pdo_pgsql
+		port: 5432
+		serverVersion: null
