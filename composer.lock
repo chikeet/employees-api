@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b3a1dd6cc318521bc2930cca85193a6",
+    "content-hash": "50e2925c26be06d0ecec8286ba484aab",
     "packages": [
         {
             "name": "contributte/apitte",
@@ -2211,7 +2211,7 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "dev-chikeetfork",
+            "version": "dev-chikeet-fork",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chikeet/faker",
@@ -7263,7 +7263,7 @@
     "aliases": [
         {
             "package": "fakerphp/faker",
-            "version": "dev-chikeetfork",
+            "version": "dev-chikeet-fork",
             "alias": "1.10.111",
             "alias_normalized": "1.10.111.0"
         }
