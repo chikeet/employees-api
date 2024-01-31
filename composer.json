@@ -28,6 +28,8 @@
 
     "contributte/apitte": "^0.12.0",
 
+    "nette/utils": "^4.0.4",
+
     "nettrine/annotations": "^0.7.0",
     "nettrine/orm": "^0.8.0",
     "nettrine/dbal": "^0.8.0",
