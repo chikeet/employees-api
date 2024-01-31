@@ -6,7 +6,6 @@ extensions:
 
 console:
 	url: http://localhost/
-#	lazy: true # temporary fix - caused "Internal error: Unexpected item 'console › lazy'."
 
 monolog:
 	holder:
