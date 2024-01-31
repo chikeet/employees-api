@@ -40,7 +40,8 @@
     "symfony/serializer": "^6.0.2",
     "symfony/validator": "^7.0.2",
     "symfony/property-info": "^6.0.0",
-    "symfony/cache": "^7.0.0"
+    "symfony/cache": "^7.0.0",
+    "fakerphp/faker": "dev-chikeetfork as 1.10.111"
   },
   "require-dev": {
     "contributte/qa": "^0.4",
@@ -69,5 +70,12 @@
       "composer/package-versions-deprecated": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/chikeet/faker",
+      "no-api": true
+    }
+  ]
 }
