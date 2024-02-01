@@ -39,7 +39,7 @@
 
     "symfony/serializer": "^6.0.2",
     "symfony/validator": "^7.0.2",
-    "symfony/property-info": "^6.0.0",
+    "symfony/property-info": "^7.0.3",
     "symfony/cache": "^7.0.0",
     "fakerphp/faker": "dev-chikeet-fork as 1.10.111"
   },
