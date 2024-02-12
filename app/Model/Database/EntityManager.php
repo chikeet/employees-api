@@ -199,15 +199,18 @@ class EntityManager
 	 *
 	 * @throws IXmlDriverException
 	 */
-	private function generateId(AbstractEntity $entity): int
+	private function generateId(AbstractEntity $entity): int // TODO @improve: support non-int IDs, e.g. UUID
 	{
 		$entityClass = $entity::class;
 
 		$this->loadIdsForEntityClass($entityClass);
 
 		$existingIds = $this->entityIds[$entityClass];
+		$maxId = count($existingIds) > 0
+			? max($existingIds)
+			: 0;
 
-		return max($existingIds) + 1; // TODO @improve: support non-int IDs, e.g. UUID
+		return $maxId + 1;
 	}
 
 	/**
@@ -340,6 +343,10 @@ class EntityManager
 
 		if ($this->idsLoadingStates[$entityClass] === self::IDS_LOADING_STATE_LOADED) {
 			return;
+		}
+
+		if (array_key_exists($entityClass, $this->entityIds) === false) {
+			$this->entityIds[$entityClass] = []; // init entity IDs - important when no persisted entities of the class exist so far
 		}
 
 		$repository = $this->getRepository($entityClass);
