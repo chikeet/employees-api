@@ -17,6 +17,12 @@ setup:
 	mkdir -p var/tmp var/log
 	chmod 0777 var/tmp var/log
 
+.PHONY: fixtures
+fixtures:
+	cp data/xml/fixtures/user.xml data/xml/user.xml
+	cp data/xml/fixtures/employee.xml data/xml/employee.xml
+	chmod 0777 data/xml/user.xml data/xml/employee.xml
+
 .PHONY: clean
 clean:
 	find var/tmp -mindepth 1 ! -name '.gitignore' -type f -or -type d -exec rm -rf {} +
