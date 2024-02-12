@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Define complex type for the row element -->
+<xs:element name="row">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="id" type="xs:integer"/>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="age" type="xs:integer"/>
+<xs:element name="gender" type="xs:string"/>
+<xs:element name="created_at" type="xs:dateTime"/>
+<xs:element name="updated_at" type="xs:dateTime" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<!-- Define complex type for the data element -->
+<xs:element name="data">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="row" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:unique name="unique_id">
+<xs:selector xpath="row"/>
+<xs:field xpath="id"/>
+</xs:unique>
+<xs:unique name="unique_age">
+<xs:selector xpath="row"/>
+<xs:field xpath="age"/>
+</xs:unique>
+</xs:element>
+
+</xs:schema>
+
+<!-- Entity hash: 3f7bab24b6e268237f2d4bdf348912fa -->
