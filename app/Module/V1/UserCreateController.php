@@ -29,7 +29,7 @@ class UserCreateController extends BaseV1Controller
 	 * @Apitte\OpenApi("
 	 *   summary: Create new user.
 	 * ")
-	 * @Apitte\Path("/create")
+	 * @Apitte\Path("/")
 	 * @Apitte\Method("POST")
 	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\User\CreateUserReqDto")
 	 */

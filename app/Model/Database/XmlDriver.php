@@ -71,7 +71,6 @@ class XmlDriver
 	 * @throws IXmlDriverException from  self::getEntityPropertyXmlValue
 	 * @throws InvalidEntityException from EntityReflection::getPropertyAttributes & self::getEntityPropertyXmlValue
 	 * @throws NotImplementedException from self::getEntityPropertyXmlValue
-	 * @throws NotPublicException from self::getEntityPropertyXmlValue
 	 * @throws TypeConversionNullabilityMismatchException from self::getEntityPropertyXmlValue
 	 * @throws PropertyDoesNotExistException from self::getEntityPropertyXmlValue
 	 */
@@ -107,7 +106,6 @@ class XmlDriver
 	 * @throws ReflectionException from EntityReflection::__construct
 	 * @throws InvalidEntityException from EntityReflection::getPropertyAttributes && self::getEntityPropertyXmlValue
 	 * @throws NotImplementedException from self::getEntityPropertyXmlValue
-	 * @throws NotPublicException from self::getEntityPropertyXmlValue
 	 * @throws TypeConversionNullabilityMismatchException from self::getEntityPropertyXmlValue
 	 * @throws PropertyDoesNotExistException from self::getEntityPropertyXmlValue
 	 */
@@ -271,12 +269,10 @@ class XmlDriver
 	/**
 	 * Retrieves value of an entity property and converts it to value that will be stored in XML.
 	 *
-	 * @throws NotImplementedException from EntityReflection::getPropertyGetter & TypeConverter::convertFromPhpToXml
-	 * @throws NotPublicException from EntityReflection::getPropertyGetter
+	 * @throws NotImplementedException from TypeConverter::convertFromPhpToXml
 	 * @throws TypeConversionNullabilityMismatchException from TypeConverter::convertFromPhpToXml
 	 * @throws PropertyDoesNotExistException from EntityReflection::getPropertyAttribute
 	 * @throws InvalidEntityException from EntityReflection::getPropertyAttribute
-	 * @throws InvalidCallbackException should never happen since the getter existence and accessibility is already checked in EntityReflection
 	 */
 	private function getEntityPropertyXmlValue(
 		AbstractEntity $entity,
@@ -285,20 +281,9 @@ class XmlDriver
 	): string
 	{
 		$propertyType = $entityReflection->getPropertyType($propertyName);
-		$propertyGetterName = $entityReflection->getPropertyGetter($propertyName);
-		$getterCallback = [$entity, $propertyGetterName];
-
-		if (is_callable($getterCallback) === false) {
-			throw new InvalidCallbackException(
-				sprintf(
-					'Getter %s::%s is not a valid callable.',
-					$entity::class,
-					$propertyGetterName,
-				),
-			);
-		}
-
-		$propertyValue = call_user_func($getterCallback);
+		$property = $entityReflection->getProperty($propertyName);
+		$property->setAccessible(true);
+		$propertyValue = $property->getValue($entity);
 
 		return TypeConverter::convertFromPhpToXml(
 			$propertyValue,
@@ -332,6 +317,7 @@ class XmlDriver
 			throw new XmlElementDoesNotExistException('Property XML node is not an XML element and nullable value cannot be set.');
 		}
 
+		$propertyNode->removeAttribute('xsi:nil');
 		$propertyNode->removeAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:nil');
 	}
 

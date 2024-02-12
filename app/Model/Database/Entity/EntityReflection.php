@@ -6,11 +6,8 @@ use App\Model\Database\Entity\LifecycleEvents\EventType;
 use App\Model\Database\Entity\LifecycleEvents\LifecycleEventsListener;
 use App\Model\Exception\Logic\ClassIsNoEntityException;
 use App\Model\Exception\Logic\InvalidEntityException;
-use App\Model\Exception\Logic\NotImplementedException;
-use App\Model\Exception\Logic\NotPublicException;
 use App\Model\Exception\Logic\PropertyDoesNotExistException;
 use App\Model\Exception\Logic\PropertyHasNoTypeException;
-use App\Model\Utils\Strings;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
@@ -163,75 +160,6 @@ final class EntityReflection
 		return $this->getProperty($propertyName)->getDefaultValue();
 	}
 
-	/**
-	 * Returns name of the property getter method.
-	 *
-	 * @throws NotImplementedException Getter does not exist.
-	 * @throws NotPublicException Getter is not public.
-	 */
-	public function getPropertyGetter(string $propertyName, bool $checkPublic = true): string
-	{
-		$propertyGetterName = 'get' . Strings::firstUpper($propertyName);
-
-		try {
-			$method = $this->reflection->getMethod($propertyGetterName);
-		} catch (ReflectionException) {
-			throw new NotImplementedException(
-				sprintf(
-					'Missing property getter %s::%s(). Cannot get property value.',
-					$this->entityClass,
-					$propertyGetterName,
-				),
-			);
-		}
-
-		if ($checkPublic && $method->isPublic() === false) {
-			throw new NotPublicException(
-				sprintf(
-					'Getter %s::%s() found but is not public. Cannot get property value. Make the getter public.',
-					$this->entityClass,
-					$propertyGetterName,
-				),
-			);
-		}
-
-		return $propertyGetterName;
-	}
-
-	/**
-	 * Returns name of the property setter method.
-	 *
-	 * @throws NotImplementedException Setter does not exist.
-	 * @throws NotPublicException Setter is not public.
-	 */
-	public function getPropertySetter(string $propertyName, bool $checkPublic = true): string
-	{
-		$propertySetterName = 'get' . Strings::firstUpper($propertyName);
-
-		try {
-			$method = $this->reflection->getMethod($propertySetterName);
-		} catch (ReflectionException) {
-			throw new NotImplementedException(
-				sprintf(
-					'Missing property setter %s::%s(). Cannot set property value.',
-					$this->entityClass,
-					$propertySetterName,
-				),
-			);
-		}
-
-		if ($checkPublic && $method->isPublic() === false) {
-			throw new NotPublicException(
-				sprintf(
-					'Setter %s::%s() found but is not public. Cannot set property value. Make the setter public.',
-					$this->entityClass,
-					$propertySetterName,
-				),
-			);
-		}
-
-		return $propertySetterName;
-	}
 
 	/**
 	 * Returns the @see Property attribute for the given property.
@@ -337,7 +265,7 @@ final class EntityReflection
 
 			/** @var LifecycleEventsListener $attribute */
 			foreach ($methodAttributes as $attribute) {
-				$this->lifecycleEventListeners[$attribute->getType()->value][] = $methodName;
+				$this->lifecycleEventListeners[$attribute->newInstance()->getType()->value][] = $methodName;
 			}
 		}
 	}
