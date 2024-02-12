@@ -33,7 +33,8 @@ Nástroje pro zajištění kvality kódu jsou dostupné prostřednictvím násle
 
 Jako kostru aplikace jsem zvolila [Apitte skeleton](https://github.com/contributte/apitte-skeleton), který je základem API nad Nette a zahrnuje všechny
 základní funkce včetně jednoduché autentizace. Protože jsem pro vývoj zvolila nejnovější PHP 8.3,
-bylo třeba před vlastním vývojem několik drobných úprav jak ve skeletonu, tak v knihovně `Faker` použité pro generování fixtures.
+bylo třeba před vlastním vývojem několik drobných úprav jak ve skeletonu, tak v knihovně `Faker` použité pro generování fixtures 
+(cílem bylo zprovoznit QA nástroje a ověřit si, že je projekt funkční).
 
 Následně jsem implementovala `EntityManager` a `XmlDriver` s využitím tříd `DOMDocument` a `DOMXPath` a použila je namísto `Doctrine ORM`,
 které je součástí skeletonu, ale je vhodné pouze pro práci s relačními databázemi.
