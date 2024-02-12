@@ -10,7 +10,6 @@ use App\Domain\Employee\EmployeeRepository;
 use App\Model\Database\Entity\Enum\Gender;
 use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
-use App\Model\Security\Passwords;
 
 final readonly class EmployeeFacade
 {
@@ -20,7 +19,6 @@ final readonly class EmployeeFacade
 	)
 	{
 	}
-
 
 	/**
 	 * @return EmployeeResponseDto[]
@@ -39,7 +37,6 @@ final readonly class EmployeeFacade
 		return $result;
 	}
 
-
 	/**
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
@@ -54,7 +51,6 @@ final readonly class EmployeeFacade
 
 		return EmployeeResponseDto::from($entity);
 	}
-
 
 	/**
 	 * @param array<string, string> $criteria
@@ -72,7 +68,6 @@ final readonly class EmployeeFacade
 		return EmployeeResponseDto::from($entity);
 	}
 
-
 	/**
 	 * @throws IXmlDriverException
 	 */
@@ -88,7 +83,6 @@ final readonly class EmployeeFacade
 
 		return $employee;
 	}
-
 
 	/**
 	 * @throws IXmlDriverException
@@ -109,7 +103,6 @@ final readonly class EmployeeFacade
 
 		return $employee;
 	}
-
 
 	/**
 	 * @throws IXmlDriverException

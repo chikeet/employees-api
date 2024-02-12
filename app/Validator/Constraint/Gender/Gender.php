@@ -11,8 +11,10 @@ final class Gender extends Constraint
 
 	public string $message = 'The string "{{ string }}" is not valid gender value.';
 
-	// all configurable options must be passed to the constructor
-	public function __construct(string $message = null, array $groups = null, $payload = null)
+	/**
+	 * All configurable options must be passed to the constructor.
+	 */
+	public function __construct(?string $message = null, ?array $groups = null, mixed $payload = null)
 	{
 		parent::__construct([], $groups, $payload);
 
@@ -23,4 +25,5 @@ final class Gender extends Constraint
 	{
 		return self::class . 'Validator';
 	}
+
 }

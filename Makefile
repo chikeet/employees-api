@@ -52,12 +52,6 @@ coverage:
 dev:
 	XDEBUG_MODE=debug NETTE_DEBUG=1 NETTE_ENV=dev php -S 0.0.0.0:8000 -t www
 
-.PHONY: build
-build:
-	NETTE_DEBUG=1 bin/console orm:schema-tool:drop --force --full-database
-	NETTE_DEBUG=1 bin/console migrations:migrate --no-interaction
-	NETTE_DEBUG=1 bin/console doctrine:fixtures:load --no-interaction --append
-
 ############################################################
 # DEPLOYMENT ###############################################
 ############################################################
@@ -65,35 +59,4 @@ build:
 deploy:
 	$(MAKE) clean
 	$(MAKE) project
-	$(MAKE) build
 	$(MAKE) clean
-
-############################################################
-# DOCKER ###################################################
-############################################################
-.PHONY: docker-postgres
-docker-postgres:
-	docker run \
-		-it \
-		-p 5432:5432 \
-		-e POSTGRES_PASSWORD=contributte \
-		-e POSTGRES_USER=contributte \
-		dockette/postgres:13
-
-.PHONY: docker-mariadb
-docker-mariadb:
-	docker run \
-		-it \
-		-p 3306:3306 \
-		-e MARIADB_ROOT_PASSWORD=contributte \
-		-e MARIADB_PASSWORD=contributte \
-		-e MARIADB_USER=contributte \
-		-e MARIADB_DATABASE=contributte \
-		mariadb:10.4
-
-.PHONY: docker-adminer
-docker-adminer:
-	docker run \
-		-it \
-		-p 9999:80 \
-		dockette/adminer:dg

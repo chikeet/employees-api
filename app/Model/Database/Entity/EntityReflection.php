@@ -160,7 +160,6 @@ final class EntityReflection
 		return $this->getProperty($propertyName)->getDefaultValue();
 	}
 
-
 	/**
 	 * Returns the @see Property attribute for the given property.
 	 *
@@ -263,7 +262,6 @@ final class EntityReflection
 
 			$methodName = $reflectionMethod->name;
 
-			/** @var LifecycleEventsListener $attribute */
 			foreach ($methodAttributes as $attribute) {
 				$this->lifecycleEventListeners[$attribute->newInstance()->getType()->value][] = $methodName;
 			}

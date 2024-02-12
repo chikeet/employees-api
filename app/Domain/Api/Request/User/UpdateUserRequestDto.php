@@ -2,19 +2,20 @@
 
 namespace App\Domain\Api\Request\User;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class UpdateUserRequestDto
 {
 
-	#[Assert\NotBlank]
-	#[Assert\Email]
+	#[NotBlank]
+	#[Email]
 	public string $email;
 
-	#[Assert\NotBlank]
+	#[NotBlank]
 	public string $name;
 
-	#[Assert\NotBlank]
+	#[NotBlank]
 	public string $surname;
 
 }

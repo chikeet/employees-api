@@ -20,7 +20,6 @@ final readonly class UserFacade
 	{
 	}
 
-
 	/**
 	 * @return UserResponseDto[]
 	 * @throws IXmlDriverException
@@ -38,7 +37,6 @@ final readonly class UserFacade
 		return $result;
 	}
 
-
 	/**
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
@@ -53,7 +51,6 @@ final readonly class UserFacade
 
 		return UserResponseDto::from($entity);
 	}
-
 
 	/**
 	 * @param array<string, string> $criteria
@@ -70,7 +67,6 @@ final readonly class UserFacade
 
 		return UserResponseDto::from($entity);
 	}
-
 
 	/**
 	 * @throws IXmlDriverException
@@ -89,7 +85,6 @@ final readonly class UserFacade
 
 		return $user;
 	}
-
 
 	/**
 	 * @throws IXmlDriverException
@@ -111,7 +106,6 @@ final readonly class UserFacade
 
 		return $user;
 	}
-
 
 	/**
 	 * @throws IXmlDriverException

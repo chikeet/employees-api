@@ -22,12 +22,10 @@ class EmployeesOneController extends BaseV1Controller
 
 	private EmployeeFacade $employeesFacade;
 
-
 	public function __construct(EmployeeFacade $employeesFacade)
 	{
 		$this->employeesFacade = $employeesFacade;
 	}
-
 
 	/**
 	 * @Apitte\OpenApi("
@@ -53,7 +51,6 @@ class EmployeesOneController extends BaseV1Controller
 				->withPrevious($e);
 		}
 	}
-
 
 	/**
 	 * @Apitte\OpenApi("

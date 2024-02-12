@@ -22,12 +22,10 @@ class UsersOneController extends BaseV1Controller
 
 	private UserFacade $usersFacade;
 
-
 	public function __construct(UserFacade $usersFacade)
 	{
 		$this->usersFacade = $usersFacade;
 	}
-
 
 	/**
 	 * @Apitte\OpenApi("
@@ -53,7 +51,6 @@ class UsersOneController extends BaseV1Controller
 				->withPrevious($e);
 		}
 	}
-
 
 	/**
 	 * @Apitte\OpenApi("

@@ -22,12 +22,10 @@ class EmployeeDeleteController extends BaseV1Controller
 
 	private EmployeeFacade $employeesFacade;
 
-
 	public function __construct(EmployeeFacade $employeesFacade)
 	{
 		$this->employeesFacade = $employeesFacade;
 	}
-
 
 	/**
 	 * @Apitte\OpenApi("

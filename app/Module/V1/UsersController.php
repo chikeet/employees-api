@@ -18,12 +18,10 @@ class UsersController extends BaseV1Controller
 
 	private UserFacade $usersFacade;
 
-
 	public function __construct(UserFacade $usersFacade)
 	{
 		$this->usersFacade = $usersFacade;
 	}
-
 
 	/**
 	 * @Apitte\OpenApi("

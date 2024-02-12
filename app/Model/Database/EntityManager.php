@@ -6,6 +6,7 @@ use App\Model\Database\Entity\AbstractEntity;
 use App\Model\Database\Repository\AbstractRepository;
 use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\Logic\EntityIdNotRegisteredException;
+use App\Model\Exception\Logic\InvalidRepositoryException;
 use App\Model\Exception\Runtime\EntityAlreadyAttachedException;
 use Nette\DI\Container;
 
@@ -26,6 +27,8 @@ class EntityManager
 
 	/**
 	 * Entity states that are considered as attached
+	 *
+	 * @var array<string> ATTACHED_STATES
 	 */
 	private const array ATTACHED_STATES = [
 		self::ENTITY_STATE_NEW,
@@ -266,7 +269,18 @@ class EntityManager
 	{
 		$repositoryClass = $this->getEntityRepositoryClass($entityClass);
 
-		return $this->container->getByType($repositoryClass);
+		$repository = $this->container->getByType($repositoryClass);
+
+		if (($repository instanceof AbstractRepository) === false) {
+			throw new InvalidRepositoryException(
+				sprintf(
+					'Repository is not a subclass of %s.',
+					AbstractRepository::class,
+				),
+			);
+		}
+
+		return $repository;
 	}
 
 	/**

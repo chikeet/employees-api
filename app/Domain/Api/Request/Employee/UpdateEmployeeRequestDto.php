@@ -2,14 +2,15 @@
 
 namespace App\Domain\Api\Request\Employee;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class UpdateEmployeeRequestDto
 {
-	#[Assert\NotBlank]
+
+	#[NotBlank]
 	public string $name;
 
-	#[Assert\NotBlank]
+	#[NotBlank]
 	public int $age;
 
 }

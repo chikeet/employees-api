@@ -21,6 +21,7 @@ class TypeConverter // TODO @kreizlova: add test
 
 	 // TODO @improve: add more types if needed
 
+	/** @var array<string, array<string>> ALLOWED_CONVERSIONS_FROM_XML_TO_PHP */
 	public const array ALLOWED_CONVERSIONS_FROM_XML_TO_PHP = [
 		XmlType::BOOLEAN->value => [
 			PhpType::BOOLEAN->value,
@@ -37,6 +38,7 @@ class TypeConverter // TODO @kreizlova: add test
 		],
 	];
 
+	/** @var array<string, array<string>> ALLOWED_CONVERSIONS_FROM_PHP_TO_XML */
 	public const array ALLOWED_CONVERSIONS_FROM_PHP_TO_XML = [
 		PhpType::BOOLEAN->value => [
 			XmlType::BOOLEAN->value,

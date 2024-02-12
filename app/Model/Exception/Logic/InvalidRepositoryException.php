@@ -5,7 +5,7 @@ namespace App\Model\Exception\Logic;
 use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\LogicException;
 
-final class NotPublicException extends LogicException implements IXmlDriverException
+final class InvalidRepositoryException extends LogicException implements IXmlDriverException
 {
 
 }

@@ -2,19 +2,20 @@
 
 namespace App\Domain\Api\Request\Employee;
 
-use App\Validator as AppAssert;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraint\Gender\Gender;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class CreateEmployeeRequestDto
 {
-	#[Assert\NotBlank]
+
+	#[NotBlank]
 	public string $name;
 
-	#[Assert\NotBlank]
+	#[NotBlank]
 	public int $age;
 
-	#[Assert\NotBlank]
-	#[AppAssert\Constraint\Gender\Gender]
+	#[NotBlank]
+	#[Gender]
 	public string $gender;
 
 }

@@ -12,6 +12,7 @@ use App\Model\Utils\DateTime;
 
 final class Employee extends AbstractEntity
 {
+
 	use TCreatedAt;
 	use TUpdatedAt;
 

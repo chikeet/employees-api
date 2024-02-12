@@ -1,13 +1,3 @@
 # Test Config
 includes:
 	- base.neon
-
-
-# Parameters =================
-parameters:
-	database:
-		driver: pdo_sqlite
-		host: test
-		dbname: test
-		user: test
-		password: test

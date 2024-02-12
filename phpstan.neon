@@ -1,7 +1,3 @@
-includes:
-	- vendor/contributte/phpstan/phpstan.neon
-	- vendor/phpstan/phpstan-doctrine/extension.neon
-
 parameters:
 	level: 9
 	phpVersion: 80100
@@ -15,6 +11,3 @@ parameters:
 	paths:
 		- app
 		- bin
-
-	doctrine:
-		objectManagerLoader: .build/phpstan-doctrine.php
