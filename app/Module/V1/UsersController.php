@@ -3,9 +3,11 @@
 namespace App\Module\V1;
 
 use Apitte\Core\Annotation\Controller as Apitte;
+use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
-use App\Domain\Api\Facade\UsersFacade;
+use App\Domain\Api\Facade\UserFacade;
 use App\Domain\Api\Response\UserResponseDto;
+use App\Model\Exception\IXmlDriverException;
 
 /**
  * @Apitte\Path("/users")
@@ -14,12 +16,14 @@ use App\Domain\Api\Response\UserResponseDto;
 class UsersController extends BaseV1Controller
 {
 
-	private UsersFacade $usersFacade;
+	private UserFacade $usersFacade;
 
-	public function __construct(UsersFacade $usersFacade)
+
+	public function __construct(UserFacade $usersFacade)
 	{
 		$this->usersFacade = $usersFacade;
 	}
+
 
 	/**
 	 * @Apitte\OpenApi("
@@ -31,7 +35,13 @@ class UsersController extends BaseV1Controller
 	 */
 	public function index(ApiRequest $request): array
 	{
-		return $this->usersFacade->findAll();
+		try {
+			return $this->usersFacade->findAll();
+		} catch (IXmlDriverException $e) {
+			throw ServerErrorException::create()
+				->withMessage('Cannot get users.')
+				->withPrevious($e);
+		}
 	}
 
 }

@@ -7,7 +7,7 @@ use Apitte\Core\Exception\Api\ClientErrorException;
 use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
 use Apitte\Core\Http\ApiResponse;
-use App\Domain\Api\Facade\UsersFacade;
+use App\Domain\Api\Facade\UserFacade;
 use App\Domain\Api\Request\User\UpdateUserRequestDto;
 use App\Domain\Api\Response\UserResponseDto;
 use App\Model\Exception\IXmlDriverException;
@@ -22,12 +22,14 @@ use Nette\Http\IResponse;
 class UserUpdateController extends BaseV1Controller
 {
 
-	private UsersFacade $usersFacade;
+	private UserFacade $usersFacade;
 
-	public function __construct(UsersFacade $usersFacade)
+
+	public function __construct(UserFacade $usersFacade)
 	{
 		$this->usersFacade = $usersFacade;
 	}
+
 
 	/**
 	 * @Apitte\OpenApi("
@@ -52,11 +54,11 @@ class UserUpdateController extends BaseV1Controller
 			return UserResponseDto::from($user);
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
-				->withMessage('User not found')
+				->withMessage('User not founds')
 				->withCode(IResponse::S404_NotFound);
 		} catch (IXmlDriverException $e) {
 			throw ServerErrorException::create()
-				->withMessage('Cannot update user')
+				->withMessage('Cannot update users')
 				->withPrevious($e);
 		}
 	}

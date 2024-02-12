@@ -11,7 +11,7 @@ use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Security\Passwords;
 
-final class UsersFacade
+final readonly class UserFacade
 {
 
 	public function __construct(
@@ -19,6 +19,7 @@ final class UsersFacade
 	)
 	{
 	}
+
 
 	/**
 	 * @return UserResponseDto[]
@@ -37,6 +38,7 @@ final class UsersFacade
 		return $result;
 	}
 
+
 	/**
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
@@ -51,6 +53,7 @@ final class UsersFacade
 
 		return UserResponseDto::from($entity);
 	}
+
 
 	/**
 	 * @param array<string, string> $criteria
@@ -67,6 +70,7 @@ final class UsersFacade
 
 		return UserResponseDto::from($entity);
 	}
+
 
 	/**
 	 * @throws IXmlDriverException
@@ -85,6 +89,7 @@ final class UsersFacade
 
 		return $user;
 	}
+
 
 	/**
 	 * @throws IXmlDriverException
@@ -106,6 +111,7 @@ final class UsersFacade
 
 		return $user;
 	}
+
 
 	/**
 	 * @throws IXmlDriverException

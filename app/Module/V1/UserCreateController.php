@@ -6,7 +6,7 @@ use Apitte\Core\Annotation\Controller as Apitte; // for Apitte annotations
 use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
 use Apitte\Core\Http\ApiResponse;
-use App\Domain\Api\Facade\UsersFacade;
+use App\Domain\Api\Facade\UserFacade;
 use App\Domain\Api\Request\User\CreateUserRequestDto;
 use App\Model\Exception\IXmlDriverException;
 use Nette\Http\IResponse;
@@ -18,12 +18,14 @@ use Nette\Http\IResponse;
 class UserCreateController extends BaseV1Controller
 {
 
-	private UsersFacade $usersFacade;
+	private UserFacade $usersFacade;
 
-	public function __construct(UsersFacade $usersFacade)
+
+	public function __construct(UserFacade $usersFacade)
 	{
 		$this->usersFacade = $usersFacade;
 	}
+
 
 	/**
 	 * @Apitte\OpenApi("
@@ -45,7 +47,7 @@ class UserCreateController extends BaseV1Controller
 				->withHeader('Content-Type', 'application/json');
 		} catch (IXmlDriverException $e) {
 			throw ServerErrorException::create()
-				->withMessage('Cannot create user')
+				->withMessage('Cannot create user.')
 				->withPrevious($e);
 		}
 	}

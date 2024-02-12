@@ -4,9 +4,11 @@ namespace App\Module\V1;
 
 use Apitte\Core\Annotation\Controller as Apitte;
 use Apitte\Core\Exception\Api\ClientErrorException;
+use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
-use App\Domain\Api\Facade\UsersFacade;
+use App\Domain\Api\Facade\UserFacade;
 use App\Domain\Api\Response\UserResponseDto;
+use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Utils\Caster;
 use Nette\Http\IResponse;
@@ -18,12 +20,14 @@ use Nette\Http\IResponse;
 class UsersOneController extends BaseV1Controller
 {
 
-	private UsersFacade $usersFacade;
+	private UserFacade $usersFacade;
 
-	public function __construct(UsersFacade $usersFacade)
+
+	public function __construct(UserFacade $usersFacade)
 	{
 		$this->usersFacade = $usersFacade;
 	}
+
 
 	/**
 	 * @Apitte\OpenApi("
@@ -41,10 +45,15 @@ class UsersOneController extends BaseV1Controller
 			return $this->usersFacade->findOneBy(['email' => Caster::toString($request->getParameter('email'))]);
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
-				->withMessage('User not found')
+				->withMessage('User not found.')
 				->withCode(IResponse::S404_NotFound);
+		} catch (IXmlDriverException $e) {
+			throw ServerErrorException::create()
+				->withMessage('Cannot get user.')
+				->withPrevious($e);
 		}
 	}
+
 
 	/**
 	 * @Apitte\OpenApi("
@@ -62,8 +71,12 @@ class UsersOneController extends BaseV1Controller
 			return $this->usersFacade->findOne(Caster::toInt($request->getParameter('id')));
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
-				->withMessage('User not found')
+				->withMessage('User not found.')
 				->withCode(IResponse::S404_NotFound);
+		} catch (IXmlDriverException $e) {
+			throw ServerErrorException::create()
+				->withMessage('Cannot get user.')
+				->withPrevious($e);
 		}
 	}
 
