@@ -38,7 +38,7 @@ class UsersOneController extends BaseV1Controller
 	public function byEmail(ApiRequest $request): UserResDto
 	{
 		try {
-			return $this->usersFacade->findOneBy(['email' => $request->getParameter('email')]);
+			return $this->usersFacade->findOneBy(['email' => Caster::toString($request->getParameter('email'))]);
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
 				->withMessage('User not found')

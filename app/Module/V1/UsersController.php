@@ -6,7 +6,6 @@ use Apitte\Core\Annotation\Controller as Apitte;
 use Apitte\Core\Http\ApiRequest;
 use App\Domain\Api\Facade\UsersFacade;
 use App\Domain\Api\Response\UserResDto;
-use App\Model\Utils\Caster;
 
 /**
  * @Apitte\Path("/users")
@@ -28,18 +27,11 @@ class UsersController extends BaseV1Controller
 	 * ")
 	 * @Apitte\Path("/")
 	 * @Apitte\Method("GET")
-	 * @Apitte\RequestParameters({
-	 * 		@Apitte\RequestParameter(name="limit", type="int", in="query", required=false, description="Data limit"),
-	 * 		@Apitte\RequestParameter(name="offset", type="int", in="query", required=false, description="Data offset")
-	 * })
 	 * @return UserResDto[]
 	 */
 	public function index(ApiRequest $request): array
 	{
-		return $this->usersFacade->findAll(
-			Caster::toInt($request->getParameter('limit', 10)),
-			Caster::toInt($request->getParameter('offset', 0))
-		);
+		return $this->usersFacade->findAll();
 	}
 
 }

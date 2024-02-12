@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Define complex type for the row element -->
+	<xs:element name="row">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:integer"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="surname" type="xs:string"/>
+				<xs:element name="email" type="xs:string"/>
+				<xs:element name="username" type="xs:string"/>
+				<xs:element name="state" type="xs:integer"/>
+				<xs:element name="password" type="xs:string"/>
+				<xs:element name="role" type="xs:string"/>
+				<xs:element name="apikey" type="xs:string"/>
+				<xs:element name="last_logged_at" type="xs:string"/>
+				<xs:element name="created_at" type="xs:string"/>
+				<xs:element name="updated_at" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Define complex type for the data element -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="row" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+		<!-- Define unique constraints for email and username -->
+		<xs:unique name="uniqueEmail">
+			<xs:selector xpath="row"/>
+			<xs:field xpath="email"/>
+		</xs:unique>
+		<xs:unique name="uniqueUsername">
+			<xs:selector xpath="row"/>
+			<xs:field xpath="username"/>
+		</xs:unique>
+	</xs:element>
+
+</xs:schema>
+
+<!-- Entity hash: 11e83c20256d101301596be475d56730 -->

@@ -3,23 +3,17 @@
 namespace App\Domain\User;
 
 use App\Model\Database\Entity\AbstractEntity;
+use App\Model\Database\Entity\Property;
 use App\Model\Database\Entity\TCreatedAt;
-use App\Model\Database\Entity\TId;
 use App\Model\Database\Entity\TUpdatedAt;
+use App\Model\Database\Type\XmlType;
 use App\Model\Exception\Logic\InvalidArgumentException;
 use App\Model\Utils\DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Nette\Utils\Random;
 
-/**
- * @ORM\Entity(repositoryClass="UserRepository")
- * @ORM\Table(name="`user`")
- * @ORM\HasLifecycleCallbacks
- */
-class User extends AbstractEntity
+final class User extends AbstractEntity
 {
 
-	use TId;
 	use TCreatedAt;
 	use TUpdatedAt;
 
@@ -30,39 +24,46 @@ class User extends AbstractEntity
 	public const STATE_ACTIVATED = 2;
 	public const STATE_BLOCKED = 3;
 
-	public const STATES = [self::STATE_FRESH, self::STATE_BLOCKED, self::STATE_ACTIVATED];
+	public const STATES = [
+		self::STATE_FRESH,
+		self::STATE_BLOCKED,
+		self::STATE_ACTIVATED,
+	];
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE, unique=false) */
+	#[Property(type: XmlType::STRING, isNullable: false, isUnique: false)]
 	private string $name;
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE, unique=false) */
+	#[Property(type: XmlType::STRING, isNullable: false, isUnique: false)]
 	private string $surname;
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE, unique=TRUE) */
+	#[Property(type: XmlType::STRING, isNullable: false, isUnique: true)]
 	private string $email;
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE, unique=TRUE) */
+	#[Property(type: XmlType::STRING, isNullable: false, isUnique: true)]
 	private string $username;
 
-	/** @ORM\Column(type="integer", length=10, nullable=FALSE) */
+	#[Property(type: XmlType::INTEGER, isNullable: false)]
 	private int $state;
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE) */
+	#[Property(type: XmlType::STRING, isNullable: false)]
 	private string $password;
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE) */
+	#[Property(type: XmlType::STRING, isNullable: false)]
 	private string $role;
 
-	/** @ORM\Column(type="string", length=255, nullable=FALSE) */
+	#[Property(type: XmlType::STRING, isNullable: false)]
 	private string $apikey;
 
-	/**
-	 * @var DateTime|NULL
-	 * @ORM\Column(type="datetime", nullable=TRUE)
-	 */
+	#[Property(type: XmlType::DATETIME, isNullable: true)]
 	private ?DateTime $lastLoggedAt = null;
 
-	public function __construct(string $name, string $surname, string $email, string $username, string $passwordHash)
+	public function __construct(
+		string $name,
+		string $surname,
+		string $email,
+		string $username,
+		string $passwordHash
+	)
 	{
 		$this->name = $name;
 		$this->surname = $surname;
@@ -73,6 +74,8 @@ class User extends AbstractEntity
 		$this->role = self::ROLE_USER;
 		$this->state = self::STATE_FRESH;
 		$this->apikey = Random::generate(100);
+
+		$this->setCreatedAt();
 	}
 
 	public function changeLoggedAt(): void
@@ -80,13 +83,21 @@ class User extends AbstractEntity
 		$this->lastLoggedAt = new DateTime();
 	}
 
-	public function getEmail(): string
+	public function getEmail(?\Throwable $notSetException = null): string
 	{
+		if (!isset($this->email) && $notSetException !== null) {
+			throw new $notSetException();
+		}
+
 		return $this->email;
 	}
 
-	public function getUsername(): string
+	public function getUsername(?\Throwable $notSetException = null): string
 	{
+		if (!isset($this->username) && $notSetException !== null) {
+			throw new $notSetException();
+		}
+
 		return $this->username;
 	}
 
@@ -95,8 +106,12 @@ class User extends AbstractEntity
 		$this->username = $username;
 	}
 
-	public function getLastLoggedAt(): ?DateTime
+	public function getLastLoggedAt(?\Throwable $notSetException = null): ?DateTime
 	{
+		if (!isset($this->lastLoggedAt) && $notSetException !== null) {
+			throw new $notSetException();
+		}
+
 		return $this->lastLoggedAt;
 	}
 
@@ -110,8 +125,12 @@ class User extends AbstractEntity
 		$this->role = $role;
 	}
 
-	public function getPasswordHash(): string
+	public function getPasswordHash(?\Throwable $notSetException = null): string
 	{
+		if (!isset($this->password) && $notSetException !== null) {
+			throw new $notSetException();
+		}
+
 		return $this->password;
 	}
 
@@ -135,13 +154,21 @@ class User extends AbstractEntity
 		return $this->state === self::STATE_ACTIVATED;
 	}
 
-	public function getName(): string
+	public function getName(?\Throwable $notSetException = null): string
 	{
+		if (!isset($this->name) && $notSetException !== null) {
+			throw new $notSetException();
+		}
+
 		return $this->name;
 	}
 
-	public function getSurname(): string
+	public function getSurname(?\Throwable $notSetException = null): string
 	{
+		if (!isset($this->surname) && $notSetException !== null) {
+			throw new $notSetException();
+		}
+
 		return $this->surname;
 	}
 
@@ -183,6 +210,21 @@ class User extends AbstractEntity
 	public function setApikey(string $apikey): void
 	{
 		$this->apikey = $apikey;
+	}
+
+	public function setName(string $name): void
+	{
+		$this->name = $name;
+	}
+
+	public function setSurname(string $surname): void
+	{
+		$this->surname = $surname;
+	}
+
+	public function setEmail(string $email): void
+	{
+		$this->email = $email;
 	}
 
 }

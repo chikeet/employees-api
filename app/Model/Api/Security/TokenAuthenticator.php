@@ -3,7 +3,7 @@
 namespace App\Model\Api\Security;
 
 use App\Domain\User\User;
-use App\Model\Database\EntityManagerDecorator;
+use App\Domain\User\UserRepository;
 use Psr\Http\Message\ServerRequestInterface;
 
 class TokenAuthenticator extends AbstractAuthenticator
@@ -12,7 +12,7 @@ class TokenAuthenticator extends AbstractAuthenticator
 	private const HEADER_TOKEN = 'X-Token';
 	private const QUERY_TOKEN = '_access_token';
 
-	public function __construct(private EntityManagerDecorator $em)
+	public function __construct(private UserRepository $userRepository)
 	{
 	}
 
@@ -31,7 +31,7 @@ class TokenAuthenticator extends AbstractAuthenticator
 		}
 
 		// Lookup user in DB
-		return $this->em->getRepository(User::class)->findOneBy(['apikey' => $token]);
+		return $this->userRepository->findOneBy(['apikey' => $token]);
 	}
 
 	private function tryHeader(ServerRequestInterface $request): ?string

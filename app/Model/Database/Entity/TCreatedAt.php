@@ -2,13 +2,13 @@
 
 namespace App\Model\Database\Entity;
 
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use App\Model\Database\Type\XmlType;
+use App\Model\Utils\DateTime;
 
 trait TCreatedAt
 {
 
-	/** @ORM\Column(type="datetime", nullable=FALSE) */
+	#[Property(type: XmlType::DATETIME, isNullable: false)]
 	protected DateTime $createdAt;
 
 	public function getCreatedAt(): DateTime
@@ -16,12 +16,6 @@ trait TCreatedAt
 		return $this->createdAt;
 	}
 
-	/**
-	 * Doctrine annotation
-	 *
-	 * @ORM\PrePersist
-	 * @internal
-	 */
 	public function setCreatedAt(): void
 	{
 		$this->createdAt = new DateTime();

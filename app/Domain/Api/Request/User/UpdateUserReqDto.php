@@ -1,10 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace App\Domain\Api\Request;
+namespace App\Domain\Api\Request\User;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
-final class CreateUserReqDto
+final class UpdateUserReqDto
 {
 
 	/**
@@ -18,10 +16,5 @@ final class CreateUserReqDto
 
 	/** @Assert\NotBlank */
 	public string $surname;
-
-	/** @Assert\NotBlank */
-	public string $username;
-
-	public ?string $password = null;
 
 }

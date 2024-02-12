@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<row>
+  <id>1</id>
+  <name>Apitte</name>
+  <surname>Admin</surname>
+  <email>admin@admin.cz</email>
+  <username>apitte</username>
+  <state>2</state>
+  <password>$2y$10$7qTgzlux5t86TeLeJmosWOf/BXXOOR37A98QkDME9zXOFud0iZ8/y</password>
+  <role>admin</role>
+  <apikey>admin</apikey>
+  <last_logged_at xsi:nil="true"></last_logged_at>
+  <created_at>2024-01-31T22:34:57+00:00</created_at>
+  <updated_at xsi:nil="true"></updated_at>
+</row>
+<row>
+  <id>2</id>
+  <name>Harmony</name>
+  <surname>Erdman</surname>
+  <email>hkonopelski@rogahn.org</email>
+  <username>gulgowski.ofelia</username>
+  <state>1</state>
+  <password>|&#39;S*Qs&#39;F-=\u#7</password>
+  <role>user</role>
+  <apikey>95f11fc8913a8880b801be92b56f99baacf23b8059d7fe0282d2251c9a54fcd2</apikey>
+  <last_logged_at xsi:nil="true"></last_logged_at>
+  <created_at>2024-01-31T22:34:57+00:00</created_at>
+  <updated_at xsi:nil="true"></updated_at>
+</row>
+</data>

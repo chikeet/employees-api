@@ -1,8 +1,12 @@
 # Services
 #
 services:
+	# XML ====================
+	- App\Model\Database\EntityManager
+
 	# Domain =================
 	- App\Domain\Api\Facade\UsersFacade
+	- App\Domain\User\UserRepository
 
 	## Serialize =============
 	symfony.serializer.serializer:

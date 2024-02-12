@@ -7,4 +7,6 @@ use Doctrine\ORM\Decorator\EntityManagerDecorator as DoctrineEntityManagerDecora
 class EntityManagerDecorator extends DoctrineEntityManagerDecorator
 {
 
+	 // TODO @kreizlova: delete within cleanup
+
 }

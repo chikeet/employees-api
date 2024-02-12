@@ -2,28 +2,32 @@
 
 namespace App\Domain\Api\Facade;
 
-use App\Domain\Api\Request\CreateUserReqDto;
+use App\Domain\Api\Request\User\CreateUserReqDto;
+use App\Domain\Api\Request\User\UpdateUserReqDto;
 use App\Domain\Api\Response\UserResDto;
 use App\Domain\User\User;
-use App\Model\Database\EntityManagerDecorator;
+use App\Domain\User\UserRepository;
+use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Security\Passwords;
 
 final class UsersFacade
 {
 
-	public function __construct(private EntityManagerDecorator $em)
+	public function __construct(
+		private UserRepository $userRepository,
+	)
 	{
 	}
 
 	/**
-	 * @param mixed[] $criteria
-	 * @param string[] $orderBy
 	 * @return UserResDto[]
+	 * @throws IXmlDriverException
+	 * @throws EntityNotFoundException
 	 */
-	public function findBy(array $criteria = [], array $orderBy = ['id' => 'ASC'], int $limit = 10, int $offset = 0): array
+	public function findAll(): array
 	{
-		$entities = $this->em->getRepository(User::class)->findBy($criteria, $orderBy, $limit, $offset);
+		$entities = $this->userRepository->findAll();
 		$result = [];
 
 		foreach ($entities as $entity) {
@@ -34,20 +38,12 @@ final class UsersFacade
 	}
 
 	/**
-	 * @return UserResDto[]
+	 * @throws IXmlDriverException
+	 * @throws EntityNotFoundException
 	 */
-	public function findAll(int $limit = 10, int $offset = 0): array
+	public function findOne(int $id): UserResDto
 	{
-		return $this->findBy([], ['id' => 'ASC'], $limit, $offset);
-	}
-
-	/**
-	 * @param mixed[] $criteria
-	 * @param string[] $orderBy
-	 */
-	public function findOneBy(array $criteria, ?array $orderBy = null): UserResDto
-	{
-		$entity = $this->em->getRepository(User::class)->findOneBy($criteria, $orderBy);
+		$entity = $this->userRepository->find($id);
 
 		if ($entity === null) {
 			throw new EntityNotFoundException();
@@ -56,11 +52,25 @@ final class UsersFacade
 		return UserResDto::from($entity);
 	}
 
-	public function findOne(int $id): UserResDto
+	/**
+	 * @param array<string, string> $criteria
+	 * @throws IXmlDriverException
+	 * @throws EntityNotFoundException
+	 */
+	public function findOneBy(array $criteria): UserResDto
 	{
-		return $this->findOneBy(['id' => $id]);
+		$entity = $this->userRepository->findOneBy($criteria);
+
+		if ($entity === null) {
+			throw new EntityNotFoundException();
+		}
+
+		return UserResDto::from($entity);
 	}
 
+	/**
+	 * @throws IXmlDriverException
+	 */
 	public function create(CreateUserReqDto $dto): User
 	{
 		$user = new User(
@@ -71,10 +81,45 @@ final class UsersFacade
 			Passwords::create()->hash($dto->password ?? md5(microtime()))
 		);
 
-		$this->em->persist($user);
-		$this->em->flush($user);
+		$this->userRepository->persist($user);
 
 		return $user;
+	}
+
+	/**
+	 * @throws IXmlDriverException
+	 * @throws EntityNotFoundException
+	 */
+	public function update(int $id, UpdateUserReqDto $dto): User
+	{
+		$user = $this->userRepository->find($id);
+
+		if ($user === null) {
+			throw new EntityNotFoundException();
+		}
+
+		$user->setName($dto->name);
+		$user->setSurname($dto->surname);
+		$user->setEmail($dto->email);
+
+		$this->userRepository->persist($user);
+
+		return $user;
+	}
+
+	/**
+	 * @throws IXmlDriverException
+	 * @throws EntityNotFoundException
+	 */
+	public function delete(int $id): bool
+	{
+		$entity = $this->userRepository->find($id);
+
+		if ($entity === null) {
+			throw new EntityNotFoundException();
+		}
+
+		return $this->userRepository->delete($entity);
 	}
 
 }

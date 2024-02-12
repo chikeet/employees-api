@@ -2,16 +2,15 @@
 
 namespace App\Model\Database\Entity;
 
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use App\Model\Database\Entity\LifecycleEvents\EventType;
+use App\Model\Database\Entity\LifecycleEvents\LifecycleEventsListener;
+use App\Model\Database\Type\XmlType;
+use App\Model\Utils\DateTime;
 
 trait TUpdatedAt
 {
 
-	/**
-	 * @var DateTime|NULL
-	 * @ORM\Column(type="datetime", nullable=TRUE)
-	 */
+	#[Property(type: XmlType::DATETIME, isNullable: true)]
 	protected ?DateTime $updatedAt = null;
 
 	public function getUpdatedAt(): ?DateTime
@@ -19,13 +18,9 @@ trait TUpdatedAt
 		return $this->updatedAt;
 	}
 
-	/**
-	 * Doctrine annotation
-	 *
-	 * @ORM\PreUpdate
-	 * @internal
-	 */
-	public function setUpdatedAt(): void
+
+	#[LifecycleEventsListener(type: EventType::BEFORE_PERSIST)]
+	public function setUpdatedAt(EventType $eventType): void
 	{
 		$this->updatedAt = new DateTime();
 	}

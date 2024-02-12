@@ -2,13 +2,13 @@
 
 namespace App\Module\V1;
 
-use Apitte\Core\Annotation\Controller as Apitte;
+use Apitte\Core\Annotation\Controller as Apitte; // for Apitte annotations
 use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
 use Apitte\Core\Http\ApiResponse;
 use App\Domain\Api\Facade\UsersFacade;
-use App\Domain\Api\Request\CreateUserReqDto;
-use Doctrine\DBAL\Exception\DriverException;
+use App\Domain\Api\Request\User\CreateUserReqDto;
+use App\Model\Exception\IXmlDriverException;
 use Nette\Http\IResponse;
 
 /**
@@ -31,7 +31,7 @@ class UserCreateController extends BaseV1Controller
 	 * ")
 	 * @Apitte\Path("/create")
 	 * @Apitte\Method("POST")
-	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\CreateUserReqDto")
+	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\User\CreateUserReqDto")
 	 */
 	public function create(ApiRequest $request, ApiResponse $response): ApiResponse
 	{
@@ -43,7 +43,7 @@ class UserCreateController extends BaseV1Controller
 
 			return $response->withStatus(IResponse::S201_Created)
 				->withHeader('Content-Type', 'application/json');
-		} catch (DriverException $e) {
+		} catch (IXmlDriverException $e) {
 			throw ServerErrorException::create()
 				->withMessage('Cannot create user')
 				->withPrevious($e);
