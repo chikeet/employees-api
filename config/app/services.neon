@@ -5,7 +5,10 @@ services:
 	- App\Model\Database\EntityManager
 
 	# Domain =================
-	- App\Domain\Api\Facade\UsersFacade
+	- App\Domain\Api\Facade\EmployeeFacade
+	- App\Domain\Employee\EmployeeRepository
+
+	- App\Domain\Api\Facade\UserFacade
 	- App\Domain\User\UserRepository
 
 	## Serialize =============
