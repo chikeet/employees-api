@@ -17,3 +17,7 @@
 
 # Docker
 /.docker/data
+/data/xml/employee.xml
+/data/xml/employee.xsd
+/data/xml/user.xml
+/data/xml/user.xsd
