@@ -5,7 +5,7 @@ namespace App\Module\V1;
 use Apitte\Core\Annotation\Controller as Apitte;
 use Apitte\Core\Http\ApiRequest;
 use App\Domain\Api\Facade\UsersFacade;
-use App\Domain\Api\Response\UserResDto;
+use App\Domain\Api\Response\UserResponseDto;
 
 /**
  * @Apitte\Path("/users")
@@ -27,7 +27,7 @@ class UsersController extends BaseV1Controller
 	 * ")
 	 * @Apitte\Path("/")
 	 * @Apitte\Method("GET")
-	 * @return UserResDto[]
+	 * @return UserResponseDto[]
 	 */
 	public function index(ApiRequest $request): array
 	{

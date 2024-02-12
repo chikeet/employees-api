@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <row>
   <id>1</id>
   <name>Apitte</name>
@@ -10,22 +10,23 @@
   <password>$2y$10$7qTgzlux5t86TeLeJmosWOf/BXXOOR37A98QkDME9zXOFud0iZ8/y</password>
   <role>admin</role>
   <apikey>admin</apikey>
-  <last_logged_at>null</last_logged_at>
-  <created_at>2024-01-31 22:34:57</created_at>
-  <updated_at>null</updated_at>
+  <last_logged_at xsi:nil="true"/>
+  <created_at>2024-01-31T22:34:57+00:00</created_at>
+  <updated_at xsi:nil="true"/>
 </row>
 <row>
   <id>2</id>
-  <name>Harmony</name>
-  <surname>Erdman</surname>
-  <email>hkonopelski@rogahn.org</email>
+  <name>&lt;evil&gt;</name>
+  <surname>boo&lt;/</surname>
+  <email>evil.boo@email.com</email>
   <username>gulgowski.ofelia</username>
   <state>1</state>
-  <password>|&#39;S*Qs&#39;F-=\u#7</password>
+  <password>|'S*Qs'F-=\u#7</password>
   <role>user</role>
   <apikey>95f11fc8913a8880b801be92b56f99baacf23b8059d7fe0282d2251c9a54fcd2</apikey>
-  <last_logged_at>null</last_logged_at>
-  <created_at>2024-01-31 22:34:57</created_at>
-  <updated_at>null</updated_at>
+  <last_logged_at xsi:nil="true"/>
+  <created_at>2024-01-31T22:34:57+00:00</created_at>
+  <updated_at>2024-02-12T12:16:01+01:00</updated_at>
 </row>
-</data>
+<row><id>3</id><name>Amelia</name><surname>Robinson</surname><email>amy.robin@email.com</email><username>iamamy</username><state>1</state><password>$2y$10$49Hei3ELeXivuit3L4ddp.mn9f2hpGUE4rKD3D8EmyvA7.xKCynVK</password><role>user</role><apikey>sreonggixnd8mgkzqozuvd5wpwhd5b0l52ozekx7cf51blniomvj0i3uh70w8iio59918szjqu4idqtbkgrzb4oyrt498tepns5e</apikey><last_logged_at xsi:nil="true"/><created_at>2024-02-12T11:51:36+01:00</created_at><updated_at>2024-02-12T11:51:36+01:00</updated_at></row>
+	</data>

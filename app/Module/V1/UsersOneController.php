@@ -6,7 +6,7 @@ use Apitte\Core\Annotation\Controller as Apitte;
 use Apitte\Core\Exception\Api\ClientErrorException;
 use Apitte\Core\Http\ApiRequest;
 use App\Domain\Api\Facade\UsersFacade;
-use App\Domain\Api\Response\UserResDto;
+use App\Domain\Api\Response\UserResponseDto;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Utils\Caster;
 use Nette\Http\IResponse;
@@ -35,7 +35,7 @@ class UsersOneController extends BaseV1Controller
 	 *      @Apitte\RequestParameter(name="email", in="query", type="string", description="User e-mail address")
 	 * })
 	 */
-	public function byEmail(ApiRequest $request): UserResDto
+	public function byEmail(ApiRequest $request): UserResponseDto
 	{
 		try {
 			return $this->usersFacade->findOneBy(['email' => Caster::toString($request->getParameter('email'))]);
@@ -56,7 +56,7 @@ class UsersOneController extends BaseV1Controller
 	 *      @Apitte\RequestParameter(name="id", in="path", type="int", description="User ID")
 	 * })
 	 */
-	public function byId(ApiRequest $request): UserResDto
+	public function byId(ApiRequest $request): UserResponseDto
 	{
 		try {
 			return $this->usersFacade->findOne(Caster::toInt($request->getParameter('id')));

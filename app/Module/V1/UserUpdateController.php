@@ -8,8 +8,8 @@ use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
 use Apitte\Core\Http\ApiResponse;
 use App\Domain\Api\Facade\UsersFacade;
-use App\Domain\Api\Request\User\UpdateUserReqDto;
-use App\Domain\Api\Response\UserResDto;
+use App\Domain\Api\Request\User\UpdateUserRequestDto;
+use App\Domain\Api\Response\UserResponseDto;
 use App\Model\Exception\IXmlDriverException;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Utils\Caster;
@@ -35,21 +35,21 @@ class UserUpdateController extends BaseV1Controller
 	 * ")
 	 * @Apitte\Path("/{id}")
 	 * @Apitte\Method("PUT")
-	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\User\UpdateUserReqDto")
+	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\User\UpdateUserRequestDto")
 	 * @Apitte\RequestParameters({
 	 *       @Apitte\RequestParameter(name="id", in="path", type="int", description="User ID")
 	 *  })
 	 */
-	public function update(ApiRequest $request, ApiResponse $response): UserResDto
+	public function update(ApiRequest $request, ApiResponse $response): UserResponseDto
 	{
 		$id = Caster::toInt($request->getParameter('id'));
-		/** @var UpdateUserReqDto $dto */
+		/** @var UpdateUserRequestDto $dto */
 		$dto = $request->getParsedBody();
 
 		try {
 			$user = $this->usersFacade->update($id, $dto);
 
-			return UserResDto::from($user);
+			return UserResponseDto::from($user);
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
 				->withMessage('User not found')

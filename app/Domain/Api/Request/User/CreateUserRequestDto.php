@@ -4,7 +4,7 @@ namespace App\Domain\Api\Request\User;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateUserReqDto
+final class CreateUserRequestDto
 {
 
 	#[Assert\NotBlank]

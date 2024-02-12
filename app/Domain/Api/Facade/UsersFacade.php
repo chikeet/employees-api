@@ -2,9 +2,9 @@
 
 namespace App\Domain\Api\Facade;
 
-use App\Domain\Api\Request\User\CreateUserReqDto;
-use App\Domain\Api\Request\User\UpdateUserReqDto;
-use App\Domain\Api\Response\UserResDto;
+use App\Domain\Api\Request\User\CreateUserRequestDto;
+use App\Domain\Api\Request\User\UpdateUserRequestDto;
+use App\Domain\Api\Response\UserResponseDto;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 use App\Model\Exception\IXmlDriverException;
@@ -21,7 +21,7 @@ final class UsersFacade
 	}
 
 	/**
-	 * @return UserResDto[]
+	 * @return UserResponseDto[]
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
 	 */
@@ -31,7 +31,7 @@ final class UsersFacade
 		$result = [];
 
 		foreach ($entities as $entity) {
-			$result[] = UserResDto::from($entity);
+			$result[] = UserResponseDto::from($entity);
 		}
 
 		return $result;
@@ -41,7 +41,7 @@ final class UsersFacade
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
 	 */
-	public function findOne(int $id): UserResDto
+	public function findOne(int $id): UserResponseDto
 	{
 		$entity = $this->userRepository->find($id);
 
@@ -49,7 +49,7 @@ final class UsersFacade
 			throw new EntityNotFoundException();
 		}
 
-		return UserResDto::from($entity);
+		return UserResponseDto::from($entity);
 	}
 
 	/**
@@ -57,7 +57,7 @@ final class UsersFacade
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
 	 */
-	public function findOneBy(array $criteria): UserResDto
+	public function findOneBy(array $criteria): UserResponseDto
 	{
 		$entity = $this->userRepository->findOneBy($criteria);
 
@@ -65,13 +65,13 @@ final class UsersFacade
 			throw new EntityNotFoundException();
 		}
 
-		return UserResDto::from($entity);
+		return UserResponseDto::from($entity);
 	}
 
 	/**
 	 * @throws IXmlDriverException
 	 */
-	public function create(CreateUserReqDto $dto): User
+	public function create(CreateUserRequestDto $dto): User
 	{
 		$user = new User(
 			$dto->name,
@@ -90,7 +90,7 @@ final class UsersFacade
 	 * @throws IXmlDriverException
 	 * @throws EntityNotFoundException
 	 */
-	public function update(int $id, UpdateUserReqDto $dto): User
+	public function update(int $id, UpdateUserRequestDto $dto): User
 	{
 		$user = $this->userRepository->find($id);
 

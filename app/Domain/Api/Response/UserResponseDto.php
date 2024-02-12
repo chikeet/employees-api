@@ -5,7 +5,7 @@ namespace App\Domain\Api\Response;
 use App\Domain\User\User;
 use DateTimeInterface;
 
-final class UserResDto
+final class UserResponseDto
 {
 
 	public int $id;

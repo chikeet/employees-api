@@ -7,7 +7,7 @@ use Apitte\Core\Exception\Api\ServerErrorException;
 use Apitte\Core\Http\ApiRequest;
 use Apitte\Core\Http\ApiResponse;
 use App\Domain\Api\Facade\UsersFacade;
-use App\Domain\Api\Request\User\CreateUserReqDto;
+use App\Domain\Api\Request\User\CreateUserRequestDto;
 use App\Model\Exception\IXmlDriverException;
 use Nette\Http\IResponse;
 
@@ -31,11 +31,11 @@ class UserCreateController extends BaseV1Controller
 	 * ")
 	 * @Apitte\Path("/")
 	 * @Apitte\Method("POST")
-	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\User\CreateUserReqDto")
+	 * @Apitte\RequestBody(entity="App\Domain\Api\Request\User\CreateUserRequestDto")
 	 */
 	public function create(ApiRequest $request, ApiResponse $response): ApiResponse
 	{
-		/** @var CreateUserReqDto $dto */
+		/** @var CreateUserRequestDto $dto */
 		$dto = $request->getParsedBody();
 
 		try {
