@@ -17,7 +17,7 @@
 
 # Docker
 /.docker/data
-/data/xml/employee.xml
-/data/xml/employee.xsd
-/data/xml/user.xml
-/data/xml/user.xsd
+/var/tmp/employee.xml
+/var/tmp/employee.xsd
+/var/tmp/user.xml
+/var/tmp/user.xsd
